@@ -1,7 +1,21 @@
 package com.likelion.likelioncrud.postTag.api.dto.response;
 
-// ResponseDto 클래스는 클라이언트가 필요로 하는 최소한의 정보반을 전달
-// 클라이언트가 PostTag로부터 필요로 하는 최소한의 정보가 뭘까?
-public record PostTagResponseDto() {
+import com.likelion.likelioncrud.postTag.domain.PostTag;
+import lombok.Builder;
 
+@Builder
+public record PostTagResponseDto(
+        Long postId,
+        String postTitle,
+        Long tagId,
+        String tagName
+) {
+    public static PostTagResponseDto from(PostTag postTag) {
+        return PostTagResponseDto.builder()
+                .postId(postTag.getPost().getPostId())
+                .postTitle(postTag.getPost().getTitle())
+                .tagId(postTag.getTag().getTagId())
+                .tagName(postTag.getTag().getName())
+                .build();
+    }
 }

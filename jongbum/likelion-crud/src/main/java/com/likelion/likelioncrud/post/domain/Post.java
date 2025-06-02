@@ -3,12 +3,16 @@ package com.likelion.likelioncrud.post.domain;
 import com.likelion.likelioncrud.member.api.dto.request.MemberUpdateRequestDto;
 import com.likelion.likelioncrud.member.domain.Member;
 import com.likelion.likelioncrud.post.api.dto.request.PostUpdateRequestDto;
+import com.likelion.likelioncrud.postTag.domain.PostTag;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +32,9 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostTag> postTags = new ArrayList<>();
 
     @Builder
     private Post(String title, String contents, Member member) {

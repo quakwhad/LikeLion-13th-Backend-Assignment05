@@ -35,7 +35,7 @@ public class TagService {
     // post에 넣은 tag와 따로 저장한 tag가 함께 출력 <= ??
     @Transactional
     public TagListResponseDto tagFindAll() {
-        List<Tag> tags = tagRepository.findAll();
+        List<Tag> tags = tagRepository.findAllWithPostTags();
         List<TagInfoResponseDto> tagInfoResponseDtoList = tags.stream()
                 .map(TagInfoResponseDto::from)
                 .toList();

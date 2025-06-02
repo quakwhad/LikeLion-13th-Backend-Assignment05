@@ -22,7 +22,7 @@ import java.util.List;
 public class PostService {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
-    // private final TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
     // 게시물 저장
     @Transactional
@@ -35,15 +35,16 @@ public class PostService {
                 .member(member)
                 .build();
 
-        /*
-        for(String tagName : postSaveRequestDto.tags()) {
+        // 태그 처리 로직
+        for (String tagName : postSaveRequestDto.tags()) {
+            // 기존 태그를 찾거나, 없으면 새로 생성하여 저장
             Tag tag = tagRepository.findByName(tagName)
-                    .orElseGet(() -> tagRepository.save(new Tag(tagName)));
+                    .orElseGet(() -> tagRepository.save(Tag.builder().name(tagName).build())); // Tag도 Builder 사용 가정
 
-            post.getPostTags().add(new PostTag(post, tag));
+            // PostTag 엔티티 생성 및 Post에 추가 (Post 엔티티의 addPostTag 편의 메서드 사용)
+            post.getPostTags().add(new PostTag(post, tag)); // PostTag 생성자에서 post와 tag를 받는다면
         }
 
-         */
         postRepository.save(post);
     }
 

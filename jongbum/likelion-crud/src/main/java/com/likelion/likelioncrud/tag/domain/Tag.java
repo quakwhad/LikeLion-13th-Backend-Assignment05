@@ -23,7 +23,7 @@ public class Tag {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "postTag", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostTag> postTags = new ArrayList<>();
 
     @Builder
